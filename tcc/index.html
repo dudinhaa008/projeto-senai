@@ -18,7 +18,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 100px 20px 20px 20px; /* espaço para o header fixo */
         }
 
         .container {
@@ -162,9 +162,116 @@
                 font-size: 2.5rem;
             }
         }
+
+        /* Header (estilos mínimos para esse index específico) */
+        #main-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            padding: 12px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo { /* sobrescreve a .logo do container para header */
+            color: #ffffff;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.25rem;
+            margin-bottom: 0;
+        }
+
+        .logo-icon {
+            font-size: 1.1rem;
+            background: #ffffff;
+            color: #667eea;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            font-weight: 600;
+            padding: 8px 10px;
+            text-decoration: none;
+        }
+
+        .mobile-menu { display: none; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu { display: block; color: #fff; }
+        }
+
+        /* Header layout helpers (logo left, nav centered, actions right) */
+        .nav-left { flex: 0 0 auto; display: flex; align-items: center; gap: 10px; }
+        .nav-center { flex: 1 1 auto; display: flex; justify-content: center; }
+        .nav-right { flex: 0 0 auto; display: flex; align-items: center; gap: 8px; }
+
+        .nav-links { display: flex; gap: 18px; align-items: center; }
+
+        .btn-outline { background: transparent; color: #ffffff; border: 2px solid rgba(255,255,255,0.85); padding: 8px 12px; border-radius: 8px; text-decoration: none; }
+
+        .brand { color: #ffffff; font-weight: 700; font-size: 1.1rem; }
+
+        @media (max-width: 768px) {
+            .nav-center, .nav-right { display: none; }
+            .mobile-menu { display: block; }
+        }
     </style>
 </head>
 <body>
+    <header id="main-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="nav-left">
+                    <div class="logo">
+                        <span class="logo-icon">⚙️</span>
+                        <span class="brand">FlowPilot</span>
+                    </div>
+                </div>
+
+                <div class="nav-center">
+                    <div class="nav-links">
+                        <a href="#features">Recursos</a>
+                        <a href="#pricing">Planos</a>
+                    </div>
+                </div>
+
+                <div class="nav-right">
+                    <a class="btn btn-primary" href="css/index.html#register">� Cadastro</a>
+                    <a class="btn btn-outline" href="css/index.html#login">� Login</a>
+                </div>
+
+                <div class="mobile-menu">☰</div>
+            </nav>
+        </div>
+    </header>
     <div class="container">
         <div class="logo">⚙️</div>
         <h1>FlowPilot</h1>

@@ -6,9 +6,9 @@
     <title>FlowPilot | Simplificando o Futuro e Turbinando sua Equipe</title>
    <link rel="stylesheet" href="style.css">
     <style>
-        /* Estilos específicos para a página de login */
+        /* Estilos específicos para a página de login e cadastro */
         .login-container {
-            min-height: 100vh;
+            min-height: calc(100vh - 80px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -18,32 +18,36 @@
 
         .login-card {
             background: var(--flow-white);
-            padding: 40px;
+            padding: 32px;
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg);
             width: 100%;
-            max-width: 400px;
-            text-align: center;
+            max-width: 460px;
+            text-align: left;
         }
 
         .login-logo {
-            margin-bottom: 30px;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .login-logo h1 {
             color: var(--flow-primary);
-            font-size: 2rem;
-            margin-bottom: 10px;
+            font-size: 1.25rem;
+            margin: 0;
         }
 
         .login-title {
             color: var(--flow-dark);
-            margin-bottom: 30px;
-            font-size: 1.5rem;
+            margin-bottom: 18px;
+            font-size: 1.25rem;
+            font-weight: 700;
         }
 
         .login-form .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 14px;
             text-align: left;
         }
 
@@ -51,8 +55,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
+            margin-bottom: 14px;
+            font-size: 0.95rem;
         }
 
         .remember-me {
@@ -67,19 +71,32 @@
         }
 
         .login-footer {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #e2e8f0;
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid #e9eef8;
             color: var(--flow-gray);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
         .back-home {
             display: inline-block;
-            margin-top: 15px;
+            margin-top: 12px;
             color: var(--flow-primary);
             text-decoration: none;
         }
+
+        /* Form controls and messages */
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 600; color: var(--flow-dark); }
+
+        .form-message { display: none; margin-bottom: 12px; padding: 10px 12px; border-radius: 8px; font-size: 0.95rem; }
+        .form-message.error { display: block; background: #fff1f0; color: var(--flow-error); border: 1px solid rgba(239,68,68,0.12); }
+        .form-message.success { display: block; background: #ecfdf5; color: var(--flow-success); border: 1px solid rgba(16,185,129,0.12); }
+
+        .form-control { width: 100%; padding: 10px 12px; border: 1.5px solid #e6eefb; border-radius: 8px; font-size: 1rem; }
+        .form-control:focus { outline: none; box-shadow: 0 6px 18px rgba(37,99,234,0.08); border-color: var(--flow-primary); }
+
+        .btn-accent { background: var(--gradient-primary); color: white; border: none; padding: 10px 14px; border-radius: 8px; font-weight: 700; }
+        .btn-accent[disabled] { opacity: 0.7; }
 
         /* Estilos para ocultar/mostrar páginas */
         .page {
@@ -139,6 +156,86 @@
             overflow: hidden;
         }
 
+        /* Header layout: logo left, nav centered, actions right */
+        .navbar {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .nav-left {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-center {
+            flex: 1 1 auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-right {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 18px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--flow-white);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 6px;
+        }
+
+        /* Button variants (overrides / small helpers) */
+        .btn-outline {
+            background: transparent;
+            color: var(--flow-white);
+            border: 2px solid rgba(255,255,255,0.85);
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: var(--flow-white);
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+        }
+
+        .brand {
+            color: var(--flow-white);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-center, .nav-right { display: none; }
+            .mobile-menu { display: block; }
+            .logo h1 { display: none; }
+        }
+
         .table-header {
             background: var(--flow-primary);
             color: white;
@@ -191,20 +288,28 @@
     <header id="main-header">
         <div class="container">
             <nav class="navbar">
-                <div class="logo">
-                    <span class="logo-icon">⚙️</span>
-                    <h1>FlowPilot</h1>
+                <div class="nav-left">
+                    <div class="logo">
+                        <span class="logo-icon">⚙️</span>
+                        <span class="brand">FlowPilot</span>
+                    </div>
                 </div>
-                
-                <ul class="nav-links">
-                    <li><a href="#" onclick="showPage('home')" class="active">Início</a></li>
-                    <li><a href="#" onclick="showPage('about')">Sobre</a></li>
-                    <li><a href="#" onclick="showPage('features')">Recursos</a></li>
-                    <li><a href="#" onclick="showPage('demo')">Demonstração</a></li>
-                    <li><a href="#" onclick="showPage('contact')">Contato</a></li>
-                    <li><a href="#" onclick="showPage('login')" class="btn-login">Login</a></li>
-                </ul>
-                
+
+                <div class="nav-center">
+                    <ul class="nav-links">
+                        <li><a href="#" onclick="showPage('home')" class="active">Início</a></li>
+                        <li><a href="#" onclick="showPage('about')">Sobre</a></li>
+                        <li><a href="#" onclick="showPage('features')">Recursos</a></li>
+                        <li><a href="#" onclick="showPage('demo')">Demonstração</a></li>
+                        <li><a href="#" onclick="showPage('contact')">Contato</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-right">
+                    <a href="#" class="btn btn-outline" onclick="showPage('login')" aria-label="Login">Login</a>
+                    <a href="#" class="btn btn-primary" onclick="showPage('register')" aria-label="Cadastro">Cadastro</a>
+                </div>
+
                 <div class="mobile-menu">☰</div>
             </nav>
         </div>
@@ -584,6 +689,7 @@
                 <p style="color: var(--flow-gray); margin-bottom: 30px;">Acesse sua conta</p>
 
                 <form class="login-form" id="loginForm">
+                    <div id="loginMessage" class="form-message" role="status" aria-live="polite"></div>
                     <div class="form-group">
                         <label for="login-email">E-mail</label>
                         <input type="email" id="login-email" class="form-control" required placeholder="seu@email.com">
@@ -606,7 +712,55 @@
                 </form>
 
                 <div class="login-footer">
-                    <p>Novo no FlowPilot? <a href="#" onclick="showPage('contact')" style="color: var(--flow-primary);">Crie sua conta</a></p>
+                    <p>Novo no FlowPilot? <a href="#" onclick="showPage('register')" style="color: var(--flow-primary);">Crie sua conta</a></p>
+                    <a href="#" onclick="showPage('home')" class="back-home">
+                        <i class="fas fa-arrow-left"></i> Voltar para o site
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página de Cadastro -->
+    <div id="register" class="page">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-logo">
+                    <span class="logo-icon">⚙️</span>
+                    <h1>FlowPilot</h1>
+                </div>
+
+                <h2 class="login-title">Crie sua conta</h2>
+                <p style="color: var(--flow-gray); margin-bottom: 20px;">Preencha os dados abaixo para se cadastrar</p>
+
+                <form class="login-form" id="registerForm">
+                    <div id="registerMessage" class="form-message" role="status" aria-live="polite"></div>
+                    <div class="form-group">
+                        <label for="reg-name">Nome</label>
+                        <input type="text" id="reg-name" class="form-control" required placeholder="Seu nome">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email">E-mail</label>
+                        <input type="email" id="reg-email" class="form-control" required placeholder="seu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-company">Empresa</label>
+                        <input type="text" id="reg-company" class="form-control" placeholder="Sua empresa (opcional)">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">Senha</label>
+                        <input type="password" id="reg-password" class="form-control" required placeholder="Senha (min 6 caracteres)">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password-confirm">Confirmar Senha</label>
+                        <input type="password" id="reg-password-confirm" class="form-control" required placeholder="Repita a senha">
+                    </div>
+
+                    <button type="submit" class="btn btn-accent btn-full">Cadastrar</button>
+                </form>
+
+                <div class="login-footer">
+                    <p>Já tem conta? <a href="#" onclick="showPage('login')" style="color: var(--flow-primary);">Entrar</a></p>
                     <a href="#" onclick="showPage('home')" class="back-home">
                         <i class="fas fa-arrow-left"></i> Voltar para o site
                     </a>
@@ -1033,39 +1187,152 @@
             document.getElementById(pageId).classList.add('active');
             
             // Atualizar menu ativo
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.classList.remove('active');
-            });
+            setActiveNav(pageId);
             
             // Rolar para o topo
             window.scrollTo(0, 0);
         }
 
+        // Helper para mensagens inline
+        function setFormMessage(id, type, text, timeout) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.className = 'form-message ' + (type === 'error' ? 'error' : 'success');
+            el.textContent = text;
+            if (timeout) {
+                setTimeout(() => {
+                    el.className = 'form-message';
+                    el.textContent = '';
+                }, timeout);
+            }
+        }
+
         // Login form handler
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            const email = document.getElementById('login-email').value;
+
+            const email = document.getElementById('login-email').value.trim().toLowerCase();
             const password = document.getElementById('login-password').value;
             const submitBtn = this.querySelector('button[type="submit"]');
             const originalText = submitBtn.textContent;
-            
+
+            if (!email || !password) {
+                setFormMessage('loginMessage', 'error', 'Por favor, preencha todos os campos.');
+                return;
+            }
+
             submitBtn.textContent = 'Entrando...';
             submitBtn.disabled = true;
-            
-            // Simulação de login
+
+            // Checar usuários em localStorage
             setTimeout(() => {
-                if (email && password) {
-                    alert('Login realizado com sucesso! Redirecionando para o Dashboard...');
-                    showPage('dashboard');
+                const usersRaw = localStorage.getItem('flowpilot_users');
+                const users = usersRaw ? JSON.parse(usersRaw) : [];
+                const user = users.find(u => u.email === email && u.password === password);
+                const existEmail = users.find(u => u.email === email);
+
+                if (user) {
+                    setFormMessage('loginMessage', 'success', 'Login realizado com sucesso! Redirecionando...', 2000);
+                    // redireciona para dashboard após pequena pausa
+                    setTimeout(() => {
+                        showPage('dashboard');
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                    }, 900);
+                } else if (!existEmail) {
+                    // usuário não cadastrado -> redirecionar para registro
+                    setFormMessage('loginMessage', 'error', 'Conta não encontrada. Você será redirecionado para cadastro...', 2500);
+                    setTimeout(() => {
+                        showPage('register');
+                        // preenche o email no cadastro para conveniência
+                        const re = document.getElementById('reg-email');
+                        if (re) re.value = email;
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                    }, 1200);
                 } else {
-                    alert('Por favor, preencha todos os campos.');
+                    setFormMessage('loginMessage', 'error', 'E-mail ou senha inválidos.');
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
                 }
-                
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }, 1500);
+            }, 700);
         });
+
+        // Registro form handler
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('reg-name').value.trim();
+            const email = document.getElementById('reg-email').value.trim().toLowerCase();
+            const company = document.getElementById('reg-company').value.trim();
+            const password = document.getElementById('reg-password').value;
+            const passwordConfirm = document.getElementById('reg-password-confirm').value;
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+
+            if (!name || !email || !password || !passwordConfirm) {
+                setFormMessage('registerMessage', 'error', 'Preencha todos os campos obrigatórios.');
+                return;
+            }
+            if (password.length < 6) {
+                setFormMessage('registerMessage', 'error', 'A senha deve ter pelo menos 6 caracteres.');
+                return;
+            }
+            if (password !== passwordConfirm) {
+                setFormMessage('registerMessage', 'error', 'As senhas não coincidem.');
+                return;
+            }
+
+            submitBtn.textContent = 'Cadastrando...';
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                const usersRaw = localStorage.getItem('flowpilot_users');
+                const users = usersRaw ? JSON.parse(usersRaw) : [];
+
+                if (users.find(u => u.email === email)) {
+                    setFormMessage('registerMessage', 'error', 'Já existe uma conta com esse e-mail. Tente fazer login.');
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    showPage('login');
+                    return;
+                }
+
+                const newUser = {
+                    id: Date.now(),
+                    name,
+                    email,
+                    company,
+                    password,
+                    createdAt: new Date().toISOString(),
+                    plan: 'fundamental'
+                };
+
+                users.push(newUser);
+                localStorage.setItem('flowpilot_users', JSON.stringify(users));
+
+                setFormMessage('registerMessage', 'success', 'Cadastro realizado com sucesso! Redirecionando para login...', 2500);
+                // prefiller do e-mail no login
+                setTimeout(() => {
+                    showPage('login');
+                    const le = document.getElementById('login-email');
+                    if (le) le.value = email;
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }, 900);
+            }, 700);
+        });
+
+        // Ajustar menu ativo ao mostrar página
+        function setActiveNav(pageId) {
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                const onclick = link.getAttribute('onclick') || '';
+                if (onclick.indexOf("showPage('" + pageId + "')") !== -1) {
+                    link.classList.add('active');
+                }
+            });
+        }
 
         // Inicializar a página
         document.addEventListener('DOMContentLoaded', function() {
