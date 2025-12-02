@@ -18,7 +18,7 @@
 
     --flow-white: #ffffff;
 
-   
+
 
     /* Cores de estado */
 
@@ -30,7 +30,7 @@
 
     --flow-info: #06b6d4;
 
-   
+
 
     /* Gradientes */
 
@@ -40,7 +40,7 @@
 
     --gradient-accent: linear-gradient(135deg, var(--flow-accent), var(--flow-primary));
 
-   
+
 
     /* Sombras */
 
@@ -54,7 +54,7 @@
 
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
-   
+
 
     /* Bordas */
 
@@ -66,7 +66,7 @@
 
     --radius-xl: 24px;
 
-   
+
 
     /* Transições */
 
@@ -130,7 +130,12 @@ body {
 
 /* ===== TIPOGRAFIA ===== */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
 
     font-weight: 700;
 
@@ -276,7 +281,7 @@ a:hover {
 
     height: 100%;
 
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
 
     transition: left 0.5s;
 
@@ -453,9 +458,9 @@ a:hover {
     background: var(--flow-white);
 
     color: var(--flow-primary);
-
-    width: 40px;
-
+    background: var(--flow-white);
+    color: var(--flow-primary);
+    border: 2px solid var(--flow-primary);
     height: 40px;
 
     border-radius: 50%;
@@ -463,8 +468,8 @@ a:hover {
     display: flex;
 
     align-items: center;
-
-    justify-content: center;
+    background: var(--flow-primary);
+    color: var(--flow-white);
 
 }
 
@@ -948,9 +953,137 @@ section {
 
 @keyframes fadeIn {
 
-    from { opacity: 0; transform: translateY(20px); }
+    /* ===== MOBILE MENU PANEL ===== */
+    .mobile-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.35);
+        z-index: 1050;
+    }
 
-    to { opacity: 1; transform: translateY(0); }
+    .mobile-panel {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 82%;
+        max-width: 360px;
+        background: var(--gradient-primary);
+        color: var(--flow-white);
+        box-shadow: var(--shadow-xl);
+        z-index: 1100;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        transform: translateX(100%);
+        transition: transform 0.25s ease-out;
+    }
+
+    .mobile-panel.open {
+        transform: translateX(0);
+    }
+
+    .mobile-panel-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+    }
+
+    .mobile-brand {
+        color: var(--flow-white);
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .mobile-close {
+        background: transparent;
+        border: 0;
+        color: var(--flow-white);
+        font-size: 1.75rem;
+        line-height: 1;
+        cursor: pointer;
+    }
+
+    .mobile-links {
+        list-style: none;
+        padding: 0;
+        margin: 10px 0 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .mobile-links a {
+        color: var(--flow-white);
+        font-weight: 600;
+        text-decoration: none;
+        padding: 8px 4px;
+        opacity: 1;
+    }
+
+    .mobile-actions {
+        margin-top: auto;
+        display: flex;
+        gap: 10px;
+    }
+
+    /* Mobile-only color adjustments */
+    @media (max-width: 768px) {
+        .mobile-panel .mobile-links a {
+            color: #fff;
+        }
+
+        .mobile-panel .btn-outline {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .mobile-panel .btn-primary {
+            color: #fff;
+        }
+    }
+
+    /* Hide conflicting desktop elements while menu is open (mobile only) */
+    @media (max-width: 768px) {
+        body.mobile-menu-open #mobileMenuToggle {
+            visibility: hidden;
+        }
+    }
+
+    /* Show mobile UI only on small screens */
+    @media (max-width: 768px) {
+        #mobileMenuToggle {
+            display: inline-flex;
+            align-items: center;
+        }
+    }
+
+    /* Defensive: ensure mobile UI is hidden on desktop */
+    @media (min-width: 769px) {
+        #mobileMenuToggle {
+            display: none;
+        }
+
+        #mobileMenuPanel[hidden] {
+            display: none !important;
+        }
+
+        #mobileMenuBackdrop[hidden] {
+            display: none !important;
+        }
+    }
+
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
 }
 
@@ -1234,9 +1367,15 @@ section {
 
 @keyframes slideIn {
 
-    from { opacity: 0; transform: translateX(20px); }
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
 
-    to { opacity: 1; transform: translateX(0); }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 
 }
 
@@ -1902,7 +2041,7 @@ footer {
 
     }
 
-   
+
 
     h1 {
 
@@ -1910,7 +2049,7 @@ footer {
 
     }
 
-   
+
 
     h2 {
 
@@ -1918,7 +2057,7 @@ footer {
 
     }
 
-   
+
 
     .hero {
 
@@ -1926,7 +2065,7 @@ footer {
 
     }
 
-   
+
 
     .hero h1 {
 
@@ -1934,7 +2073,7 @@ footer {
 
     }
 
-   
+
 
     .nav-links {
 
@@ -1942,7 +2081,7 @@ footer {
 
     }
 
-   
+
 
     .mobile-menu {
 
@@ -1950,7 +2089,7 @@ footer {
 
     }
 
-   
+
 
     .features,
 
@@ -1964,7 +2103,189 @@ footer {
 
     }
 
-   
+
+    /* Large tablets / small desktops */
+    @media (max-width: 992px) {
+        .container {
+            padding: 0 16px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        .hero {
+            padding: 140px 0 80px;
+        }
+
+        .features {
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+
+        .pricing-cards {
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+
+        .about-content {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Tablets */
+    @media (max-width: 768px) {
+        #main-header {
+            padding: 0.75rem 0;
+        }
+
+        .navbar {
+            gap: 12px;
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        .mobile-menu {
+            display: block;
+            color: var(--flow-white);
+        }
+
+        .hero h1 {
+            font-size: 2.25rem;
+        }
+
+        .hero h2 {
+            font-size: 1.125rem;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            padding: 0 12px;
+        }
+
+        section {
+            padding: 56px 0;
+        }
+
+        .tabs-header {
+            gap: 4px;
+        }
+
+        .tab-button {
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+        }
+
+        .tab-content {
+            padding: 1.75rem;
+        }
+
+        .process-steps {
+            gap: 10px;
+        }
+
+        .step-circle {
+            width: 52px;
+            height: 52px;
+        }
+
+        .price {
+            font-size: 2.25rem;
+        }
+
+        .popular-badge {
+            font-size: 0.75rem;
+        }
+
+        .gamification-features {
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+
+        .contact-form {
+            max-width: 100%;
+            padding: 0 8px;
+        }
+
+        .login-card {
+            max-width: 100%;
+        }
+    }
+
+    /* Phones */
+    @media (max-width: 480px) {
+        .container {
+            padding: 0 12px;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            font-size: 1.25rem;
+        }
+
+        .hero {
+            padding: 120px 0 64px;
+        }
+
+        .hero h1 {
+            font-size: 1.85rem;
+        }
+
+        .hero h2 {
+            font-size: 1rem;
+        }
+
+        .features {
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+        }
+
+        .feature-card {
+            padding: 1.5rem;
+        }
+
+        .tabs-header {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tab-button {
+            flex: 0 0 auto;
+        }
+
+        .pricing-cards {
+            grid-template-columns: 1fr;
+        }
+
+        .pricing-card {
+            padding: 2rem 1.25rem;
+        }
+
+        .steps {
+            grid-template-columns: 1fr;
+        }
+
+        .step-card {
+            padding: 1.25rem;
+        }
+
+        .demo-controls {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+
 
     .about-content {
 
@@ -1972,7 +2293,7 @@ footer {
 
     }
 
-   
+
 
     .process-steps {
 
@@ -1982,7 +2303,7 @@ footer {
 
     }
 
-   
+
 
     .process-steps::before {
 
@@ -1990,7 +2311,7 @@ footer {
 
     }
 
-   
+
 
     .step {
 
@@ -2002,7 +2323,7 @@ footer {
 
     }
 
-   
+
 
     .step-circle {
 
@@ -2012,7 +2333,7 @@ footer {
 
     }
 
-   
+
 
     .pricing-card.featured {
 
@@ -2020,7 +2341,7 @@ footer {
 
     }
 
-   
+
 
     .pricing-card.featured:hover {
 
@@ -2040,7 +2361,7 @@ footer {
 
     }
 
-   
+
 
     h2 {
 
@@ -2048,7 +2369,7 @@ footer {
 
     }
 
-   
+
 
     .hero h1 {
 
@@ -2056,7 +2377,7 @@ footer {
 
     }
 
-   
+
 
     .section-title h2 {
 
@@ -2064,7 +2385,7 @@ footer {
 
     }
 
-   
+
 
     .feature-card,
 
@@ -2074,7 +2395,7 @@ footer {
 
     }
 
-   
+
 
     .tab-content {
 
@@ -2090,9 +2411,14 @@ footer {
 
 @keyframes float {
 
-    0%, 100% { transform: translateY(0px); }
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
 
-    50% { transform: translateY(-10px); }
+    50% {
+        transform: translateY(-10px);
+    }
 
 }
 
@@ -2108,102 +2434,143 @@ footer {
 
 /* ===== UTILITÁRIOS ===== */
 
-.text-center { text-align: center; }
+.text-center {
+    text-align: center;
+}
 
-.text-left { text-align: left; }
+.text-left {
+    text-align: left;
+}
 
-.text-right { text-align: right; }
-
-
-
-.mt-1 { margin-top: 0.5rem; }
-
-.mt-2 { margin-top: 1rem; }
-
-.mt-3 { margin-top: 1.5rem; }
-
-.mt-4 { margin-top: 2rem; }
-
-.mt-5 { margin-top: 3rem; }
+.text-right {
+    text-align: right;
+}
 
 
 
-.mb-1 { margin-bottom: 0.5rem; }
+.mt-1 {
+    margin-top: 0.5rem;
+}
 
-.mb-2 { margin-bottom: 1rem; }
+.mt-2 {
+    margin-top: 1rem;
+}
 
-.mb-3 { margin-bottom: 1.5rem; }
+.mt-3 {
+    margin-top: 1.5rem;
+}
 
-.mb-4 { margin-bottom: 2rem; }
+.mt-4 {
+    margin-top: 2rem;
+}
 
-.mb-5 { margin-bottom: 3rem; }
+.mt-5 {
+    margin-top: 3rem;
+}
 
 
 
-.p-1 { padding: 0.5rem; }
+.mb-1 {
+    margin-bottom: 0.5rem;
+}
 
-.p-2 { padding: 1rem; }
+.mb-2 {
+    margin-bottom: 1rem;
+}
 
-.p-3 { padding: 1.5rem; }
+.mb-3 {
+    margin-bottom: 1.5rem;
+}
 
-.p-4 { padding: 2rem; }
+.mb-4 {
+    margin-bottom: 2rem;
+}
 
-.p-5 { padding: 3rem; }
+.mb-5 {
+    margin-bottom: 3rem;
+}
+
+
+
+.p-1 {
+    padding: 0.5rem;
+}
+
+.p-2 {
+    padding: 1rem;
+}
+
+.p-3 {
+    padding: 1.5rem;
+}
+
+.p-4 {
+    padding: 2rem;
+}
+
+.p-5 {
+    padding: 3rem;
+}
 
 
 
 /* ===== ACESSIBILIDADE ===== */
 
-@media (prefers-reduced-motion: reduce) 
-
+@media (prefers-reduced-motion: reduce) {
     * {
-
         animation-duration: 0.01ms !important;
-
         animation-iteration-count: 1 !important;
-
         transition-duration: 0.01ms !important;
-
+        scroll-behavior: auto !important;
     }
+}
 
-    .page#login .login-container,
-    .page#register .login-container {
-        min-height: 100vh !important; /* ocupar toda a altura da viewport */
-        background: var(--gradient-dark) !important; /* manter fundo escuro até o fim */
-        box-sizing: border-box !important;
-        padding-top: 120px !important; /* empurra o card para baixo (ajustado para 140px) */
-        display: flex !important;
-        align-items: flex-start !important; /* garantir que o card não fique no topo */
-        justify-content: center !important; /* centralizar horizontalmente */
-        overflow: auto !important; /* permitir rolagem quando necessário */
-    }
+.page#login .login-container,
+.page#register .login-container {
+    min-height: 100vh !important;
+    /* ocupar toda a altura da viewport */
+    background: var(--gradient-dark) !important;
+    /* manter fundo escuro até o fim */
+    box-sizing: border-box !important;
+    padding-top: 120px !important;
+    /* empurra o card para baixo (ajustado para 140px) */
+    display: flex !important;
+    align-items: flex-start !important;
+    /* garantir que o card não fique no topo */
+    justify-content: center !important;
+    /* centralizar horizontalmente */
+    overflow: auto !important;
+    /* permitir rolagem quando necessário */
+}
 
-    /* Evitar que o header fixe sobreponha o conteúdo principal */
-    .page#login .login-card,
-    .page#register .login-card {
-        margin: 4px auto; /* pequeno espaçamento interno e centralizado */
-        position: relative;
-        z-index: 5; /* abaixo do header, mas acima do fundo */
-        border-top-left-radius: 12px;
-        border-top-right-radius: 12px;
-    }
+/* Evitar que o header fixe sobreponha o conteúdo principal */
+.page#login .login-card,
+.page#register .login-card {
+    margin: 4px auto;
+    /* pequeno espaçamento interno e centralizado */
+    position: relative;
+    z-index: 5;
+    /* abaixo do header, mas acima do fundo */
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
 
-    /* Se necessário, reduzir cantos brancos abaixo do card */
-    .page#login footer,
-    .page#register footer {
-        display: none !important;
-    }
+/* Se necessário, reduzir cantos brancos abaixo do card */
+.page#login footer,
+.page#register footer {
+    display: none !important;
+}
 
-    /* Esconder o footer global quando em tela de autenticação */
-    body.auth-active footer {
-        display: none !important;
-    }
+/* Esconder o footer global quando em tela de autenticação */
+body.auth-active footer {
+    display: none !important;
+}
 
-    /* Classe adicionada via JS para estilizar o body quando em tela de autenticação */
-    body.auth-active {
-        background: var(--gradient-dark) !important;
-        overflow-y: auto !important;
-    }
+/* Classe adicionada via JS para estilizar o body quando em tela de autenticação */
+body.auth-active {
+    background: var(--gradient-dark) !important;
+    overflow-y: auto !important;
+}
 
 
 
@@ -2321,9 +2688,15 @@ footer {
 
 @keyframes fadeIn {
 
-    from { opacity: 0; transform: translateY(20px); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
 
-    to { opacity: 1; transform: translateY(0); }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
 }
 
@@ -2386,3 +2759,6 @@ footer {
     display: block;
 
 }
+
+/* Ensure elements with the HTML "hidden" attribute are not rendered */
+[hidden] { display: none !important; }
