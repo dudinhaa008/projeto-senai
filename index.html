@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowPilot | Simplificando o Futuro e Turbinando sua Equipe</title>
+   <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilos específicos para a página de login e cadastro */
+        .login-container {
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-dark);
+            padding: 20px;
+        }
+
+        .login-card {
+            background: var(--flow-white);
+            padding: 32px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 460px;
+            text-align: left;
+        }
+
+        .login-logo {
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .login-logo h1 {
+            color: var(--flow-primary);
+            font-size: 1.25rem;
+            margin: 0;
+        }
+
+        .login-title {
+            color: var(--flow-dark);
+            margin-bottom: 18px;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .login-form .form-group {
+            margin-bottom: 14px;
+            text-align: left;
+        }
+
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            font-size: 0.95rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .forgot-password {
+            color: var(--flow-primary);
+            text-decoration: none;
+        }
+
+        .login-footer {
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid #e9eef8;
+            color: var(--flow-gray);
+            font-size: 0.95rem;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 12px;
+            color: var(--flow-primary);
+            text-decoration: none;
+        }
+
+        /* Form controls and messages */
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 600; color: var(--flow-dark); }
+
+        .form-message { display: none; margin-bottom: 12px; padding: 10px 12px; border-radius: 8px; font-size: 0.95rem; }
+        .form-message.error { display: block; background: #fff1f0; color: var(--flow-error); border: 1px solid rgba(239,68,68,0.12); }
+        .form-message.success { display: block; background: #ecfdf5; color: var(--flow-success); border: 1px solid rgba(16,185,129,0.12); }
+
+        .form-control { width: 100%; padding: 10px 12px; border: 1.5px solid #e6eefb; border-radius: 8px; font-size: 1rem; }
+        .form-control:focus { outline: none; box-shadow: 0 6px 18px rgba(37,99,234,0.08); border-color: var(--flow-primary); }
+
+        .btn-accent { background: var(--gradient-primary); color: white; border: none; padding: 10px 14px; border-radius: 8px; font-weight: 700; }
+        .btn-accent[disabled] { opacity: 0.7; }
+
+        /* Estilos para ocultar/mostrar páginas */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Dashboard styles */
+        .dashboard-container {
+            padding: 100px 0 50px;
+            min-height: 100vh;
+            background: var(--flow-light);
+        }
+
+        .dashboard-header {
+            background: var(--flow-white);
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--flow-white);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--flow-primary);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--flow-gray);
+            font-size: 0.9rem;
+        }
+
+        .process-table {
+            background: var(--flow-white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        /* Header layout: logo left, nav centered, actions right */
+        .navbar {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .nav-left {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-center {
+            flex: 1 1 auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-right {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 18px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--flow-white);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 6px;
+        }
+
+        /* Button variants (overrides / small helpers) */
+        .btn-outline {
+            background: transparent;
+            color: var(--flow-white);
+            border: 2px solid rgba(255,255,255,0.85);
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: var(--flow-white);
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+        }
+
+        .brand {
+            color: var(--flow-white);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-center, .nav-right { display: none; }
+            .mobile-menu { display: block; }
+            .logo h1 { display: none; }
+        }
+
+        .table-header {
+            background: var(--flow-primary);
+            color: white;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 15px;
+            font-weight: 600;
+        }
+
+        .table-row {
+            padding: 15px 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 15px;
+            border-bottom: 1px solid #e2e8f0;
+            align-items: center;
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .status-completed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-processing {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Principal -->
+    <header id="main-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="nav-left">
+                    <div class="logo">
+                        <span class="logo-icon">⚙️</span>
+                        <span class="brand">FlowPilot</span>
+                    </div>
+                </div>
+
+                <div class="nav-center">
+                    <ul class="nav-links">
+                        <li><a href="#" onclick="showPage('home')" class="active">Início</a></li>
+                        <li><a href="#" onclick="showPage('about')">Sobre</a></li>
+                        <li><a href="#" onclick="showPage('features')">Recursos</a></li>
+                        <li><a href="#" onclick="showPage('demo')">Demonstração</a></li>
+                        <li><a href="#" onclick="showPage('contact')">Contato</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-right">
+                    <a href="#" class="btn btn-outline" onclick="showPage('login')" aria-label="Login">Login</a>
+                    <a href="#" class="btn btn-primary" onclick="showPage('register')" aria-label="Cadastro">Cadastro</a>
+                </div>
+
+                <div class="mobile-menu">☰</div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Página Inicial -->
+    <div id="home" class="page active">
+        <section class="hero">
+            <div class="container">
+                <h1>FLOWPILOT - SIMPLIFICANDO O FUTURO E TURBINANDO SUA EQUIPE</h1>
+                <h2>Uma plataforma digital para gerenciar e otimizar suas tarefas</h2>
+                <p>Experimente o teste grátis e descubra como mais de 200 empresas já estão otimizando processos com o FlowPilot</p>
+                <a href="#" onclick="showPage('demo')" class="btn btn-accent">Experimente Grátis</a>
+            </div>
+        </section>
+
+        <section id="tabs-section">
+            <div class="container">
+                <div class="tabs-container">
+                    <div class="tabs-header">
+                    </div>
+                    
+                    <div class="tab-content active" id="tab1">
+                        <div class="section-title">
+                            <h2>Bem-vindo ao FlowPilot</h2>
+                            <p>Sua plataforma completa para gestão e automação de processos digitais</p>
+                        </div>
+                        <div class="features">
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-rocket"></i></div>
+                                <h3>Implementação Rápida</h3>
+                                <p>Comece a usar em poucos dias com nossa implementação ágil e suporte especializado.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                                <h3>Resultados Mensuráveis</h3>
+                                <p>Acompanhe métricas de desempenho e veja o retorno sobre seu investimento.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                                <h3>Segurança Garantida</h3>
+                                <p>Proteja seus dados com criptografia de ponta a ponta e conformidade com LGPD.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="tab2">
+                        <div class="section-title">
+                            <h2>Sobre o FlowPilot</h2>
+                            <p>Conheça nossa plataforma de gestão de processos digitais</p>
+                        </div>
+                        <div class="about-content">
+                            <div class="about-text">
+                                <h3>O que é o FlowPilot?</h3>
+                                <p>O FlowPilot é uma plataforma inovadora que simplifica a gestão de processos digitais, permitindo que empresas de todos os tamanhos otimizem seus fluxos de trabalho de forma intuitiva e eficiente.</p>
+                                <p>Com recursos de automação, gamificação e análise de dados, o FlowPilot transforma a maneira como sua equipe trabalha, aumentando a produtividade e reduzindo custos operacionais.</p>
+                                <ul>
+                                    <li>Interface intuitiva e fácil de usar</li>
+                                    <li>Implementação rápida e sem complicações</li>
+                                    <li>Suporte técnico especializado</li>
+                                    <li>Atualizações constantes e melhorias</li>
+                                </ul>
+                            </div>
+                            <div class="about-benefits">
+                                <h4>Por que escolher o FlowPilot?</h4>
+                                <div class="benefit-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Redução de até 40% no tempo de processo</span>
+                                </div>
+                                <div class="benefit-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Diminuição de 60% em erros manuais</span>
+                                </div>
+                                <div class="benefit-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Aumento de 30% na satisfação do cliente</span>
+                                </div>
+                                <div class="benefit-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>ROI médio de 200% no primeiro ano</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="tab3">
+                        <div class="section-title">
+                            <h2>Nossos Recursos</h2>
+                            <p>Conheça as principais funcionalidades da nossa plataforma</p>
+                        </div>
+                        <div class="features">
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-project-diagram"></i></div>
+                                <h3>Mapeamento Visual</h3>
+                                <p>Crie diagramas interativos de seus processos para melhor compreensão e comunicação entre equipes.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                                <h3>Automação Inteligente</h3>
+                                <p>Automatize tarefas repetitivas e reduza erros humanos com nossa tecnologia de RPA.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                <h3>Dashboard em Tempo Real</h3>
+                                <p>Monitore o desempenho de seus processos com métricas atualizadas em tempo real.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                                <h3>Acesso Multiplataforma</h3>
+                                <p>Acesse e gerencie seus processos de qualquer dispositivo, a qualquer momento.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-user-shield"></i></div>
+                                <h3>Controle de Acesso</h3>
+                                <p>Defina permissões granulares para diferentes usuários e níveis hierárquicos.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-sync-alt"></i></div>
+                                <h3>Integrações</h3>
+                                <p>Conecte-se facilmente com seus sistemas existentes através de APIs robustas.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="tab4">
+                        <div class="section-title">
+                            <h2>Demonstração Interativa</h2>
+                            <p>Veja como funciona nossa plataforma de gestão de processos digitais em ação</p>
+                        </div>
+                        <div class="demo-container">
+                            <div class="process-steps">
+                                <div class="step active" data-step="1">
+                                    <div class="step-circle">1</div>
+                                    <h4>Mapeamento</h4>
+                                </div>
+                                <div class="step" data-step="2">
+                                    <div class="step-circle">2</div>
+                                    <h4>Automação</h4>
+                                </div>
+                                <div class="step" data-step="3">
+                                    <div class="step-circle">3</div>
+                                    <h4>Execução</h4>
+                                </div>
+                                <div class="step" data-step="4">
+                                    <div class="step-circle">4</div>
+                                    <h4>Otimização</h4>
+                                </div>
+                            </div>
+                            
+                            <div class="step-content active" id="step-1">
+                                <h3>Mapeamento de Processos</h3>
+                                <p>Utilize nossa ferramenta de arrastar e soltar para mapear visualmente seus processos de negócio. Identifique etapas, responsáveis e pontos de decisão.</p>
+                                <div class="example-box">
+                                    <p><strong>Exemplo:</strong> Processo de aprovação de despesas</p>
+                                    <ul>
+                                        <li>Solicitação → Análise → Aprovação → Pagamento</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="step-content" id="step-2">
+                                <h3>Automação de Tarefas</h3>
+                                <p>Configure regras de automação para tarefas repetitivas. Notificações, aprovações e integrações podem ser automatizadas para aumentar a eficiência.</p>
+                                <div class="example-box">
+                                    <p><strong>Exemplo:</strong> Notificação automática para aprovações pendentes</p>
+                                </div>
+                            </div>
+                            
+                            <div class="step-content" id="step-3">
+                                <h3>Execução e Monitoramento</h3>
+                                <p>Coloque seus processos em ação e monitore o desempenho em tempo real. Identifique gargalos e acompanhe métricas importantes.</p>
+                                <div class="example-box">
+                                    <p><strong>Exemplo:</strong> Dashboard com tempo médio de aprovação e taxa de conclusão</p>
+                                </div>
+                            </div>
+                            
+                            <div class="step-content" id="step-4">
+                                <h3>Otimização Contínua</h3>
+                                <p>Com base nos dados coletados, identifique oportunidades de melhoria e otimize continuamente seus processos para maior eficiência.</p>
+                                <div class="example-box">
+                                    <p><strong>Exemplo:</strong> Redução de 40% no tempo de processamento após otimização</p>
+                                </div>
+                            </div>
+                            
+                            <div class="demo-controls">
+                                <button class="btn" id="prev-step">Anterior</button>
+                                <button class="btn btn-accent" id="next-step">Próximo</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="tab5">
+                        <div class="section-title">
+                            <h2>Entre em Contato</h2>
+                            <p>Pronto para transformar a gestão de processos na sua empresa? Entre em contato conosco.</p>
+                        </div>
+                        <div class="contact-form">
+                            <form id="contactForm">
+                                <div class="form-group">
+                                    <label for="name">Nome Completo *</label>
+                                    <input type="text" id="name" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">E-mail *</label>
+                                    <input type="email" id="email" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="company">Empresa</label>
+                                    <input type="text" id="company" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Telefone</label>
+                                    <input type="tel" id="phone" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">Mensagem *</label>
+                                    <textarea id="message" class="form-control" rows="5" required placeholder="Descreva suas necessidades de gestão de processos..."></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-full">Enviar Mensagem</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="pricing-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Nossos Planos</h2>
+                    <p>Escolha o plano perfeito para sua empresa</p>
+                </div>
+                <div class="pricing-cards">
+                    <div class="pricing-card">
+                        <h3>Fundamental</h3>
+                        <div class="price">R$50<span>/mês</span></div>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check"></i> Até 5 usuários</li>
+                            <li><i class="fas fa-check"></i> 10 processos</li>
+                            <li><i class="fas fa-check"></i> Suporte básico</li>
+                            <li><i class="fas fa-check"></i> Relatórios simples</li>
+                        </ul>
+                        <button class="btn btn-full">Escolher Plano</button>
+                    </div>
+                    <div class="pricing-card featured">
+                        <div class="popular-badge">Mais Popular</div>
+                        <h3>Competitiva</h3>
+                        <div class="price">R$75<span>/mês</span></div>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check"></i> Até 15 usuários</li>
+                            <li><i class="fas fa-check"></i> 50 processos</li>
+                            <li><i class="fas fa-check"></i> Suporte prioritário</li>
+                            <li><i class="fas fa-check"></i> Relatórios avançados</li>
+                            <li><i class="fas fa-check"></i> Integrações básicas</li>
+                        </ul>
+                        <button class="btn btn-accent btn-full">Escolher Plano</button>
+                    </div>
+                    <div class="pricing-card">
+                        <h3>Enterprise</h3>
+                        <div class="price">R$135<span>/mês</span></div>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check"></i> Usuários ilimitados</li>
+                            <li><i class="fas fa-check"></i> Processos ilimitados</li>
+                            <li><i class="fas fa-check"></i> Suporte 24/7</li>
+                            <li><i class="fas fa-check"></i> Analytics avançados</li>
+                            <li><i class="fas fa-check"></i> Todas as integrações</li>
+                            <li><i class="fas fa-check"></i> API personalizada</li>
+                        </ul>
+                        <button class="btn btn-full">Escolher Plano</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="gamification">
+            <div class="container">
+                <h2>Engaje sua equipe com gamificação</h2>
+                <p>Transforme tarefas rotineiras em experiências divertidas e motivadoras</p>
+                
+                <div class="gamification-features">
+                    <div class="gamification-card">
+                        <i class="fas fa-trophy"></i>
+                        <h3>Sistema de Recompensas</h3>
+                        <p>Premie desempenhos excepcionais com badges, pontos e reconhecimento.</p>
+                    </div>
+                    <div class="gamification-card">
+                        <i class="fas fa-chart-bar"></i>
+                        <h3>Rankings e Competições</h3>
+                        <p>Crie rankings saudáveis para motivar a equipe a superar metas.</p>
+                    </div>
+                    <div class="gamification-card">
+                        <i class="fas fa-tasks"></i>
+                        <h3>Missões e Desafios</h3>
+                        <p>Transforme tarefas em missões com objetivos claros e recompensas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="how-it-works">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Como Funciona</h2>
+                    <p>Três passos simples para transformar sua gestão de processos</p>
+                </div>
+                
+                <div class="steps">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h3>Configure seus processos</h3>
+                        <p>Use nossa interface intuitiva para mapear e configurar todos os seus fluxos de trabalho.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h3>Automatize tarefas</h3>
+                        <p>Defina regras de automação para eliminar tarefas repetitivas e reduzir erros.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h3>Monitore resultados</h3>
+                        <p>Acompanhe métricas em tempo real e identifique oportunidades de melhoria.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-column">
+                        <h3>FlowPilot</h3>
+                        <p>Soluções inovadoras para gestão de processos digitais. Transforme sua empresa com automação inteligente.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Links Rápidos</h3>
+                        <ul class="footer-links">
+                            <li><a href="#" onclick="showPage('home')"><i class="fas fa-chevron-right"></i> Início</a></li>
+                            <li><a href="#" onclick="showPage('about')"><i class="fas fa-chevron-right"></i> Sobre</a></li>
+                            <li><a href="#" onclick="showPage('features')"><i class="fas fa-chevron-right"></i> Recursos</a></li>
+                            <li><a href="#" onclick="showPage('pricing')"><i class="fas fa-chevron-right"></i> Planos</a></li>
+                            <li><a href="#" onclick="showPage('demo')"><i class="fas fa-chevron-right"></i> Demonstração</a></li>
+                            <li><a href="#" onclick="showPage('contact')"><i class="fas fa-chevron-right"></i> Contato</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Contato</h3>
+                        <ul class="footer-links">
+                            <li><a href="mailto:contato@flowpilot.com"><i class="fas fa-envelope"></i> contato@flowpilot.com</a></li>
+                            <li><a href="tel:+551112345678"><i class="fas fa-phone"></i> +55 (21) 1234-5678</a></li>
+                            <li><a href="#"><i class="fas fa-map-marker-alt"></i> Rio de Janeiro, RJ</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="copyright">
+                    <p>&copy; 2023 FlowPilot. Todos os direitos reservados.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Página de Login -->
+    <div id="login" class="page">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-logo">
+                    <span class="logo-icon">⚙️</span>
+                    <h1>FlowPilot</h1>
+                </div>
+                
+                <h2 class="login-title">Olá, Amigo!</h2>
+                <p style="color: var(--flow-gray); margin-bottom: 30px;">Acesse sua conta</p>
+
+                <form class="login-form" id="loginForm">
+                    <div id="loginMessage" class="form-message" role="status" aria-live="polite"></div>
+                    <div class="form-group">
+                        <label for="login-email">E-mail</label>
+                        <input type="email" id="login-email" class="form-control" required placeholder="seu@email.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="login-password">Senha</label>
+                        <input type="password" id="login-password" class="form-control" required placeholder="Sua senha">
+                    </div>
+
+                    <div class="login-options">
+                        <label class="remember-me">
+                            <input type="checkbox" id="remember">
+                            Lembrar-me
+                        </label>
+                        <a href="#" class="forgot-password">Esqueci a senha</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-accent btn-full">Entrar</button>
+                </form>
+
+                <div class="login-footer">
+                    <p>Novo no FlowPilot? <a href="#" onclick="showPage('register')" style="color: var(--flow-primary);">Crie sua conta</a></p>
+                    <a href="#" onclick="showPage('home')" class="back-home">
+                        <i class="fas fa-arrow-left"></i> Voltar para o site
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página de Cadastro -->
+    <div id="register" class="page">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-logo">
+                    <span class="logo-icon">⚙️</span>
+                    <h1>FlowPilot</h1>
+                </div>
+
+                <h2 class="login-title">Crie sua conta</h2>
+                <p style="color: var(--flow-gray); margin-bottom: 20px;">Preencha os dados abaixo para se cadastrar</p>
+
+                <form class="login-form" id="registerForm">
+                    <div id="registerMessage" class="form-message" role="status" aria-live="polite"></div>
+                    <div class="form-group">
+                        <label for="reg-name">Nome</label>
+                        <input type="text" id="reg-name" class="form-control" required placeholder="Seu nome">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email">E-mail</label>
+                        <input type="email" id="reg-email" class="form-control" required placeholder="seu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-company">Empresa</label>
+                        <input type="text" id="reg-company" class="form-control" placeholder="Sua empresa (opcional)">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">Senha</label>
+                        <input type="password" id="reg-password" class="form-control" required placeholder="Senha (min 6 caracteres)">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password-confirm">Confirmar Senha</label>
+                        <input type="password" id="reg-password-confirm" class="form-control" required placeholder="Repita a senha">
+                    </div>
+
+                    <button type="submit" class="btn btn-accent btn-full">Cadastrar</button>
+                </form>
+
+                <div class="login-footer">
+                    <p>Já tem conta? <a href="#" onclick="showPage('login')" style="color: var(--flow-primary);">Entrar</a></p>
+                    <a href="#" onclick="showPage('home')" class="back-home">
+                        <i class="fas fa-arrow-left"></i> Voltar para o site
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página do Dashboard -->
+    <div id="dashboard" class="page">
+        <div class="dashboard-container">
+            <div class="container">
+                <div class="dashboard-header">
+                    <h1>Dashboard FlowPilot</h1>
+                    <p>Gerencie e monitore seus processos em tempo real</p>
+                </div>
+
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <span class="stat-number">24</span>
+                        <span class="stat-label">Processos Ativos</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">89%</span>
+                        <span class="stat-label">Eficiência</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">12</span>
+                        <span class="stat-label">Tarefas Pendentes</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">R$ 15.2K</span>
+                        <span class="stat-label">Economia/Mês</span>
+                    </div>
+                </div>
+
+                <div class="process-table">
+                    <div class="table-header">
+                        <div>Processo</div>
+                        <div>Status</div>
+                        <div>Responsável</div>
+                        <div>Prazo</div>
+                    </div>
+                    <div class="table-row">
+                        <div>Aprovação de Despesas</div>
+                        <div><span class="status-badge status-completed">Concluído</span></div>
+                        <div>Financeiro</div>
+                        <div>01/09/2023</div>
+                    </div>
+                    <div class="table-row">
+                        <div>Onboarding de Clientes</div>
+                        <div><span class="status-badge status-processing">Em Andamento</span></div>
+                        <div>Comercial</div>
+                        <div>02/09/2023</div>
+                    </div>
+                    <div class="table-row">
+                        <div>Controle de Qualidade</div>
+                        <div><span class="status-badge status-pending">Pendente</span></div>
+                        <div>Operações</div>
+                        <div>03/09/2023</div>
+                    </div>
+                    <div class="table-row">
+                        <div>Gestão de Projetos</div>
+                        <div><span class="status-badge status-completed">Concluído</span></div>
+                        <div>TI</div>
+                        <div>04/09/2023</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn" onclick="showPage('home')">
+                        <i class="fas fa-arrow-left"></i> Voltar para o Site
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página Sobre -->
+    <div id="about" class="page">
+        <section class="hero">
+            <div class="container">
+                <h1>Sobre o FlowPilot</h1>
+                <h2>Conheça nossa missão e visão</h2>
+                <p>Desde 2023, transformamos a gestão de processos digitais</p>
+            </div>
+        </section>
+
+        <section class="about-section" style="padding: 100px 0;">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>Nossa História</h3>
+                        <p>O FlowPilot nasceu da necessidade de simplificar processos complexos em empresas de todos os tamanhos. A partir de 2023, começamos nossa jornada para revolucionar a forma como as empresas gerenciam seus fluxos de trabalho.</p>
+                        
+                        <h3>Missão</h3>
+                        <p>Simplificar a gestão de processos digitais, tornando-a acessível e eficiente para todas as empresas.</p>
+                        
+                        <h3>Visão</h3>
+                        <p>Ser a plataforma líder em automação e gestão de processos na América Latina.</p>
+                    </div>
+                    <div class="about-benefits">
+                        <h4>Nossos Valores</h4>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Inovação constante</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Transparência total</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Foco no cliente</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Excelência operacional</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Página Recursos -->
+    <div id="features" class="page">
+        <section class="hero">
+            <div class="container">
+                <h1>Nossos Recursos</h1>
+                <h2>Descubra todas as funcionalidades da plataforma</h2>
+                <p>Ferramentas poderosas para transformar sua operação</p>
+            </div>
+        </section>
+
+        <section class="features-section" style="padding: 100px 0;">
+            <div class="container">
+                <div class="features">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-project-diagram"></i></div>
+                        <h3>Mapeamento Visual</h3>
+                        <p>Crie diagramas interativos de seus processos para melhor compreensão e comunicação entre equipes.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                        <h3>Automação Inteligente</h3>
+                        <p>Automatize tarefas repetitivas e reduza erros humanos com nossa tecnologia de RPA.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        <h3>Dashboard em Tempo Real</h3>
+                        <p>Monitore o desempenho de seus processos com métricas atualizadas em tempo real.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                        <h3>Acesso Multiplataforma</h3>
+                        <p>Acesse e gerencie seus processos de qualquer dispositivo, a qualquer momento.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-user-shield"></i></div>
+                        <h3>Controle de Acesso</h3>
+                        <p>Defina permissões granulares para diferentes usuários e níveis hierárquicos.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-sync-alt"></i></div>
+                        <h3>Integrações</h3>
+                        <p>Conecte-se facilmente com seus sistemas existentes através de APIs robustas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Página Planos -->
+    <div id="pricing" class="page">
+        <section class="hero">
+            <div class="container">
+                <h1>Nossos Planos</h1>
+                <h2>Escolha o ideal para sua empresa</h2>
+                <p>Preços transparentes e sem surpresas</p>
+            </div>
+        </section>
+
+        <section class="pricing-section" style="padding: 100px 0;">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Nossos Planos</h2>
+                    <p>Escolha o plano perfeito para sua empresa</p>
+                </div>
+                <div class="pricing-cards">
+                    <div class="pricing-card">
+                        <h3>Fundamental</h3>
+                        <div class="price">R$50<span>/mês</span></div>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check"></i> Até 5 usuários</li>
+                            <li><i class="fas fa-check"></i> 10 processos</li>
+                            <li><i class="fas fa-check"></i> Suporte básico</li>
+                            <li><i class="fas fa-check"></i> Relatórios simples</li>
+                        </ul>
+                        <button class="btn btn-full">Escolher Plano</button>
+                    </div>
+                    <div class="pricing-card featured">
+                        <div class="popular-badge">Mais Popular</div>
+                        <h3>Competitiva</h3>
+                        <div class="price">R$75<span>/mês</span></div>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check"></i> Até 15 usuários</li>
+                            <li><i class="fas fa-check"></i> 50 processos</li>
+                            <li><i class="fas fa-check"></i> Suporte prioritário</li>
+                            <li><i class="fas fa-check"></i> Relatórios avançados</li>
+                            <li><i class="fas fa-check"></i> Integrações básicas</li>
+                        </ul>
+                        <button class="btn btn-accent btn-full">Escolher Plano</button>
+                    </div>
+                    <div class="pricing-card">
+                        <h3>Enterprise</h3>
+                        <div class="price">R$135<span>/mês</span></div>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check"></i> Usuários ilimitados</li>
+                            <li><i class="fas fa-check"></i> Processos ilimitados</li>
+                            <li><i class="fas fa-check"></i> Suporte 24/7</li>
+                            <li><i class="fas fa-check"></i> Analytics avançados</li>
+                            <li><i class="fas fa-check"></i> Todas as integrações</li>
+                            <li><i class="fas fa-check"></i> API personalizada</li>
+                        </ul>
+                        <button class="btn btn-full">Escolher Plano</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+   <!-- Página Demonstração -->
+<div id="demo" class="page">
+    <section class="hero">
+        <div class="container">
+            <h1>Demonstração</h1>
+            <h2>Veja o FlowPilot em ação</h2>
+            <p>Teste grátis por 14 dias</p>
+            <a href="#" onclick="showPage('login')" class="btn btn-accent">Começar Teste Grátis</a>
+        </div>
+    </section>
+
+    <section class="demo-section" style="padding: 100px 0;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Como Funciona o FlowPilot</h2>
+                <p>Veja passo a passo como nossa plataforma transforma sua gestão de processos</p>
+            </div>
+            
+            <div class="features">
+                <!-- Quadrado 1: Mapeamento -->
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-project-diagram"></i></div>
+                    <h3>1. Mapeamento de Processos</h3>
+                    <p>Utilize nossa ferramenta de arrastar e soltar para mapear visualmente seus processos de negócio. Identifique etapas, responsáveis e pontos de decisão de forma intuitiva.</p>
+                    <div class="example-box" style="margin-top: 15px; text-align: left;">
+                        <p><strong>Exemplo Prático:</strong></p>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><i class="fas fa-arrow-right" style="color: var(--flow-primary); margin-right: 8px;"></i>Solicitação → Análise → Aprovação → Pagamento</li>
+                            <li><i class="fas fa-arrow-right" style="color: var(--flow-primary); margin-right: 8px;"></i>Tempo médio de redução: 40%</li>
+                            <li><i class="fas fa-arrow-right" style="color: var(--flow-primary); margin-right: 8px;"></i>Erros manuais reduzidos em 60%</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Quadrado 2: Automação -->
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                    <h3>2. Automação Inteligente</h3>
+                    <p>Configure regras de automação para tarefas repetitivas. Notificações, aprovações e integrações podem ser automatizadas para aumentar a eficiência operacional.</p>
+                    <div class="example-box" style="margin-top: 15px; text-align: left;">
+                        <p><strong>Recursos de Automação:</strong></p>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><i class="fas fa-check" style="color: var(--flow-success); margin-right: 8px;"></i>Notificações automáticas</li>
+                            <li><i class="fas fa-check" style="color: var(--flow-success); margin-right: 8px;"></i>Aprovações em fluxo contínuo</li>
+                            <li><i class="fas fa-check" style="color: var(--flow-success); margin-right: 8px;"></i>Integrações com sistemas existentes</li>
+                            <li><i class="fas fa-check" style="color: var(--flow-success); margin-right: 8px;"></i>Relatórios automáticos</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Quadrado 3: Execução -->
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    <h3>3. Execução e Monitoramento</h3>
+                    <p>Coloque seus processos em ação e monitore o desempenho em tempo real. Identifique gargalos e acompanhe métricas importantes através do nosso dashboard.</p>
+                    <div class="example-box" style="margin-top: 15px; text-align: left;">
+                        <p><strong>Métricas Monitoradas:</strong></p>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><i class="fas fa-chart-line" style="color: var(--flow-info); margin-right: 8px;"></i>Tempo médio de processamento</li>
+                            <li><i class="fas fa-chart-bar" style="color: var(--flow-info); margin-right: 8px;"></i>Taxa de conclusão</li>
+                            <li><i class="fas fa-exclamation-triangle" style="color: var(--flow-warning); margin-right: 8px;"></i>Gargalos identificados</li>
+                            <li><i class="fas fa-user-check" style="color: var(--flow-success); margin-right: 8px;"></i>Satisfação do usuário</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Quadrado 4: Otimização -->
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-sync-alt"></i></div>
+                    <h3>4. Otimização Contínua</h3>
+                    <p>Com base nos dados coletados, identifique oportunidades de melhoria e otimize continuamente seus processos para maior eficiência e produtividade.</p>
+                    <div class="example-box" style="margin-top: 15px; text-align: left;">
+                        <p><strong>Benefícios da Otimização:</strong></p>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><i class="fas fa-bolt" style="color: var(--flow-primary); margin-right: 8px;"></i>Processos 40% mais rápidos</li>
+                            <li><i class="fas fa-money-bill-wave" style="color: var(--flow-success); margin-right: 8px;"></i>Redução de custos operacionais</li>
+                            <li><i class="fas fa-users" style="color: var(--flow-accent); margin-right: 8px;"></i>Equipe mais produtiva</li>
+                            <li><i class="fas fa-star" style="color: var(--flow-warning); margin-right: 8px;"></i>Melhoria contínua garantida</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- QUADRADO COM O JOGO -->
+            <div style="max-width: 800px; margin: 50px auto 0; padding: 30px; background: #f8f9fa; border-radius: var(--radius-lg); border-left: 4px solid var(--flow-primary); box-shadow: var(--shadow-md);">
+                <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
+                    <div style="width: 60px; height: 60px; background: var(--gradient-primary); border-radius: var(--radius); display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-gamepad" style="font-size: 1.8rem; color: white;"></i>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--flow-primary); margin-bottom: 5px;">Recurso Extra Interativo</h3>
+                        <p style="color: var(--flow-gray); margin: 0;">Aprenda na prática com nosso jogo educacional</p>
+                    </div>
+                </div>
+                
+                <p style="color: var(--flow-gray); margin-bottom: 20px; line-height: 1.6;">
+                    Complemente seu aprendizado sobre gestão de processos digitais com nosso jogo interativo. 
+                    Uma forma divertida e prática de entender os conceitos que aplicamos no FlowPilot.
+                </p>
+                
+                <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 25px;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <p style="font-weight: 600; color: var(--flow-dark); margin-bottom: 8px;"><i class="fas fa-check-circle" style="color: var(--flow-success); margin-right: 8px;"></i> Simulação Realista</p>
+                        <p style="font-size: 0.9rem; color: var(--flow-gray); margin: 0;">Processos de gestão em cenários do mundo real</p>
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <p style="font-weight: 600; color: var(--flow-dark); margin-bottom: 8px;"><i class="fas fa-check-circle" style="color: var(--flow-success); margin-right: 8px;"></i> Feedback Imediato</p>
+                        <p style="font-size: 0.9rem; color: var(--flow-gray); margin: 0;">Aprenda com cada decisão tomada</p>
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <p style="font-weight: 600; color: var(--flow-dark); margin-bottom: 8px;"><i class="fas fa-check-circle" style="color: var(--flow-success); margin-right: 8px;"></i> Gratuito</p>
+                        <p style="font-size: 0.9rem; color: var(--flow-gray); margin: 0;">Disponível para acesso imediato</p>
+                    </div>
+                </div>
+                
+                <a href="https://rai2312.itch.io/gesto-de-projetos-digitais" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   style="display: inline-flex; align-items: center; gap: 10px; background: var(--gradient-primary); color: white; padding: 12px 30px; border-radius: var(--radius); text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                   <i class="fas fa-play-circle"></i> Jogar Agora: Gestão de Projetos Digitais
+                </a>
+                
+                <p style="font-size: 0.85rem; color: var(--flow-gray); margin-top: 15px; font-style: italic;">
+                    <i class="fas fa-external-link-alt" style="margin-right: 5px;"></i> O jogo abrirá em uma nova aba
+                </p>
+            </div>
+            
+            <!-- Call to Action no final -->
+            <div style="text-align: center; margin-top: 50px; padding: 40px; background: var(--gradient-primary); border-radius: var(--radius-lg); color: white;">
+                <h3 style="color: white; margin-bottom: 20px;">Pronto para transformar seus processos?</h3>
+                <p style="color: rgba(255,255,255,0.9); margin-bottom: 25px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Experimente o FlowPilot gratuitamente por 14 dias e veja os resultados em sua empresa.
+                </p>
+                <a href="#" onclick="showPage('login')" class="btn" style="background: white; color: var(--flow-primary); font-weight: 600;">
+                    <i class="fas fa-rocket"></i> Começar Teste Grátis
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
+    <!-- Página Contato -->
+    <div id="contact" class="page">
+        <section class="hero">
+            <div class="container">
+                <h1>Contato</h1>
+                <h2>Fale conosco</h2>
+                <p>Estamos aqui para ajudar sua empresa</p>
+            </div>
+        </section>
+
+        <section class="contact-section" style="padding: 100px 0;">
+            <div class="container">
+                <div class="contact-form">
+                    <form id="contactFormPage">
+                        <div class="form-group">
+                            <label for="contact-name">Nome Completo *</label>
+                            <input type="text" id="contact-name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-email">E-mail *</label>
+                            <input type="email" id="contact-email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-company">Empresa</label>
+                            <input type="text" id="contact-company" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-phone">Telefone</label>
+                            <input type="tel" id="contact-phone" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-message">Mensagem *</label>
+                            <textarea id="contact-message" class="form-control" rows="5" required placeholder="Descreva suas necessidades..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-full">Enviar Mensagem</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/validar.js"></script>
+    <script>
+        // Função para mostrar páginas
+        function showPage(pageId) {
+            // Esconder todas as páginas
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Mostrar a página selecionada
+            document.getElementById(pageId).classList.add('active');
+            
+            // Atualizar menu ativo
+            setActiveNav(pageId);
+            
+            // Rolar para o topo
+            window.scrollTo(0, 0);
+        }
+
+        // Helper para mensagens inline
+        function setFormMessage(id, type, text, timeout) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.className = 'form-message ' + (type === 'error' ? 'error' : 'success');
+            el.textContent = text;
+            if (timeout) {
+                setTimeout(() => {
+                    el.className = 'form-message';
+                    el.textContent = '';
+                }, timeout);
+            }
+        }
+
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('login-email').value.trim().toLowerCase();
+            const password = document.getElementById('login-password').value;
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+
+            if (!email || !password) {
+                setFormMessage('loginMessage', 'error', 'Por favor, preencha todos os campos.');
+                return;
+            }
+
+            submitBtn.textContent = 'Entrando...';
+            submitBtn.disabled = true;
+
+            // Checar usuários em localStorage
+            setTimeout(() => {
+                const usersRaw = localStorage.getItem('flowpilot_users');
+                const users = usersRaw ? JSON.parse(usersRaw) : [];
+                const user = users.find(u => u.email === email && u.password === password);
+                const existEmail = users.find(u => u.email === email);
+
+                if (user) {
+                    setFormMessage('loginMessage', 'success', 'Login realizado com sucesso! Redirecionando...', 2000);
+                    // redireciona para dashboard após pequena pausa
+                    setTimeout(() => {
+                        showPage('dashboard');
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                    }, 900);
+                } else if (!existEmail) {
+                    // usuário não cadastrado -> redirecionar para registro
+                    setFormMessage('loginMessage', 'error', 'Conta não encontrada. Você será redirecionado para cadastro...', 2500);
+                    setTimeout(() => {
+                        showPage('register');
+                        // preenche o email no cadastro para conveniência
+                        const re = document.getElementById('reg-email');
+                        if (re) re.value = email;
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                    }, 1200);
+                } else {
+                    setFormMessage('loginMessage', 'error', 'E-mail ou senha inválidos.');
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            }, 700);
+        });
+
+        // Registro form handler
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('reg-name').value.trim();
+            const email = document.getElementById('reg-email').value.trim().toLowerCase();
+            const company = document.getElementById('reg-company').value.trim();
+            const password = document.getElementById('reg-password').value;
+            const passwordConfirm = document.getElementById('reg-password-confirm').value;
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+
+            if (!name || !email || !password || !passwordConfirm) {
+                setFormMessage('registerMessage', 'error', 'Preencha todos os campos obrigatórios.');
+                return;
+            }
+            if (password.length < 6) {
+                setFormMessage('registerMessage', 'error', 'A senha deve ter pelo menos 6 caracteres.');
+                return;
+            }
+            if (password !== passwordConfirm) {
+                setFormMessage('registerMessage', 'error', 'As senhas não coincidem.');
+                return;
+            }
+
+            submitBtn.textContent = 'Cadastrando...';
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                const usersRaw = localStorage.getItem('flowpilot_users');
+                const users = usersRaw ? JSON.parse(usersRaw) : [];
+
+                if (users.find(u => u.email === email)) {
+                    setFormMessage('registerMessage', 'error', 'Já existe uma conta com esse e-mail. Tente fazer login.');
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    showPage('login');
+                    return;
+                }
+
+                const newUser = {
+                    id: Date.now(),
+                    name,
+                    email,
+                    company,
+                    password,
+                    createdAt: new Date().toISOString(),
+                    plan: 'fundamental'
+                };
+
+                users.push(newUser);
+                localStorage.setItem('flowpilot_users', JSON.stringify(users));
+
+                setFormMessage('registerMessage', 'success', 'Cadastro realizado com sucesso! Redirecionando para login...', 2500);
+                // prefiller do e-mail no login
+                setTimeout(() => {
+                    showPage('login');
+                    const le = document.getElementById('login-email');
+                    if (le) le.value = email;
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }, 900);
+            }, 700);
+        });
+
+        // Ajustar menu ativo ao mostrar página
+        function setActiveNav(pageId) {
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                const onclick = link.getAttribute('onclick') || '';
+                if (onclick.indexOf("showPage('" + pageId + "')") !== -1) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Inicializar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar se há uma página específica na URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const page = urlParams.get('page');
+            if (page && document.getElementById(page)) {
+                showPage(page);
+            }
+        });
+    </script>
+</body>
+</html>
