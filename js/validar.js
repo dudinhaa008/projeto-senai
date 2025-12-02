@@ -11,6 +11,13 @@ function showPage(pageId) {
         targetPage.classList.add('active');
     }
     
+    // Adicionar classe no body quando estamos nas páginas de autenticação
+    if (pageId === 'login' || pageId === 'register') {
+        document.body.classList.add('auth-active');
+    } else {
+        document.body.classList.remove('auth-active');
+    }
+    
     // Atualizar menu ativo
     document.querySelectorAll('.nav-links a').forEach(link => {
         link.classList.remove('active');
@@ -31,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
 
     // DEMONSTRAÇÃO INTERATIVA 
     const steps = document.querySelectorAll('.step');

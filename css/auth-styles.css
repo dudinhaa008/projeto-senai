@@ -125,3 +125,48 @@
     margin-bottom: 10px;
     font-size: 1.1rem;
 }
+
+
+/* Abas de autenticação (login / cadastro) */
+.auth-tabs {
+    display: flex;
+    gap: 8px;
+    margin: 10px 0 12px;
+    background: transparent;
+}
+
+.auth-tab-btn {
+    flex: 1 1 0;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: rgba(15,23,42,0.03);
+    color: #0f172a;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.auth-tab-btn:hover { filter: brightness(0.98); }
+
+.auth-tab-btn.active {
+    background: linear-gradient(90deg,#4f46e5,#06b6d4);
+    color: #fff;
+    border-color: rgba(0,0,0,0.04);
+    box-shadow: 0 6px 18px rgba(99,102,241,0.12);
+}
+
+/* Melhor responsividade do card de autenticação */
+.login-container {
+    padding: 28px 16px;
+    min-height: 100vh; /* ocupar toda a altura para evitar faixa clara embaixo */
+    align-items: flex-start; /* posicionar o card mais abaixo */
+    box-sizing: border-box;
+    padding-top: 0; /* deixar o recuo controlado por style.css */
+}
+
+.login-card { max-width: 520px; padding: 28px; }
+
+.login-title { margin-top: 6px; margin-bottom: 14px; }
+
+/* Ajuste para botões de largura total usados nos formulários */
+.btn-full { width: 100%; display: inline-block; padding: 12px 14px; border-radius: 8px; }

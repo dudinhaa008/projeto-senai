@@ -2154,7 +2154,7 @@ footer {
 
 /* ===== ACESSIBILIDADE ===== */
 
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) 
 
     * {
 
@@ -2166,7 +2166,44 @@ footer {
 
     }
 
-}
+    .page#login .login-container,
+    .page#register .login-container {
+        min-height: 100vh !important; /* ocupar toda a altura da viewport */
+        background: var(--gradient-dark) !important; /* manter fundo escuro até o fim */
+        box-sizing: border-box !important;
+        padding-top: 120px !important; /* empurra o card para baixo (ajustado para 140px) */
+        display: flex !important;
+        align-items: flex-start !important; /* garantir que o card não fique no topo */
+        justify-content: center !important; /* centralizar horizontalmente */
+        overflow: auto !important; /* permitir rolagem quando necessário */
+    }
+
+    /* Evitar que o header fixe sobreponha o conteúdo principal */
+    .page#login .login-card,
+    .page#register .login-card {
+        margin: 4px auto; /* pequeno espaçamento interno e centralizado */
+        position: relative;
+        z-index: 5; /* abaixo do header, mas acima do fundo */
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+    }
+
+    /* Se necessário, reduzir cantos brancos abaixo do card */
+    .page#login footer,
+    .page#register footer {
+        display: none !important;
+    }
+
+    /* Esconder o footer global quando em tela de autenticação */
+    body.auth-active footer {
+        display: none !important;
+    }
+
+    /* Classe adicionada via JS para estilizar o body quando em tela de autenticação */
+    body.auth-active {
+        background: var(--gradient-dark) !important;
+        overflow-y: auto !important;
+    }
 
 
 
