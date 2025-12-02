@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowPilot - Acesso Rápido</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            flex-direction: column;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f9ff;
+            transform: translateY(-2px);
+        }
+
+        .info {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            text-align: left;
+            border-left: 4px solid #667eea;
+        }
+
+        .info h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .info p {
+            color: #555;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .test-data {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .test-data strong {
+            color: #667eea;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #555;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 30px;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .logo {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">⚙️</div>
+        <h1>FlowPilot</h1>
+        <p class="subtitle">Simplificando o Futuro e Turbinando sua Equipe</p>
+
+        <div class="buttons">
+            <button class="btn btn-primary" onclick="window.location.href='css/index.html'">
+                🚀 Acessar Plataforma
+            </button>
+            <button class="btn btn-secondary" onclick="window.location.href='css/index.html#login'">
+                🔐 Ir para Login
+            </button>
+        </div>
+
+        <div class="info">
+            <h3>✨ Sistema de Autenticação com LocalStorage</h3>
+            <p>
+                Este é um sistema completo de <strong>login e cadastro</strong> que funciona 
+                100% no navegador, sem necessidade de servidor backend para testes!
+            </p>
+
+            <ul class="feature-list">
+                <li>Cadastro de usuários com validação</li>
+                <li>Login com autenticação</li>
+                <li>Dashboard personalizado</li>
+                <li>Sessão persistente</li>
+                <li>Opção "Lembrar-me"</li>
+                <li>Dados salvos em LocalStorage</li>
+            </ul>
+
+            <div class="test-data">
+                <strong>📝 Teste com Dados Pré-carregados:</strong><br><br>
+                <strong>E-mail:</strong> teste@flowpilot.com<br>
+                <strong>Senha:</strong> 123456
+                <br><br>
+                Ou crie uma nova conta acessando a página de <strong>Cadastro</strong>!
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>💡 Dica: Os dados são salvos localmente no seu navegador. Limpe o cache ou use modo privado para recomeçar.</p>
+        </div>
+    </div>
+
+    <script>
+        // Pré-carregar um usuário de teste se não houver usuários
+        document.addEventListener('DOMContentLoaded', function() {
+            const users = localStorage.getItem('flowpilot_users');
+            if (!users) {
+                const testUser = {
+                    id: 1,
+                    name: 'Usuário Teste',
+                    email: 'teste@flowpilot.com',
+                    company: 'FlowPilot',
+                    password: '123456',
+                    createdAt: new Date().toISOString(),
+                    plan: 'fundamental'
+                };
+                localStorage.setItem('flowpilot_users', JSON.stringify([testUser]));
+                console.log('Usuário de teste pré-carregado!');
+            }
+        });
+    </script>
+</body>
+</html>
