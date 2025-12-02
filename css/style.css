@@ -2761,4 +2761,6 @@ body.auth-active {
 }
 
 /* Ensure elements with the HTML "hidden" attribute are not rendered */
-[hidden] { display: none !important; }
+[hidden] {
+    display: none !important;
+}
